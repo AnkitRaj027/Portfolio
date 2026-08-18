@@ -11,13 +11,20 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState([
     {
       sender: 'bot',
-      text: `Hi! I'm Ankit's AI Assistant. Ask me anything about Ankit's projects, skills, certifications, or how to contact him.`,
+      text: `Hi! I'm AI. Ask me anything about Ankit's projects, skills, certifications, or how to contact him.`,
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
+
+  // Listen for navbar trigger event
+  useEffect(() => {
+    const handleToggle = () => setIsOpen(prev => !prev);
+    window.addEventListener('toggle-ai-assistant', handleToggle);
+    return () => window.removeEventListener('toggle-ai-assistant', handleToggle);
+  }, []);
 
   // Auto-scroll to bottom of chat
   useEffect(() => {
@@ -101,51 +108,11 @@ export default function AIAssistant() {
 
   return (
     <>
-      {/* Floating Toggle Button */}
-      <motion.button
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl cursor-pointer select-none"
-        style={{
-          background: 'radial-gradient(circle at 30% 30%, var(--accent), var(--accent-dark, #1e40af))',
-          boxShadow: '0 8px 30px rgba(59,130,246,0.4)',
-        }}
-        onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Toggle AI Assistant"
-      >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <X className="text-white" size={24} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="bot"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="relative"
-            >
-              <MessageSquare className="text-white fill-white/10" size={24} />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full animate-ping" />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.button>
-
       {/* Floating Chat Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 z-40 w-[350px] sm:w-[380px] h-[500px] rounded-2xl glass-strong shadow-2xl flex flex-col overflow-hidden border border-slate-800"
+            className="fixed bottom-6 right-6 md:right-8 z-50 w-[350px] sm:w-[380px] h-[520px] rounded-2xl glass-strong shadow-2xl flex flex-col overflow-hidden border border-slate-800"
             initial={{ opacity: 0, y: 32, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.95 }}
@@ -158,7 +125,7 @@ export default function AIAssistant() {
                   <Sparkles size={16} className="animate-pulse" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-display font-bold text-white leading-none">Ankit AI</h4>
+                  <h4 className="text-sm font-display font-bold text-white leading-none">AI</h4>
                   <span className="text-[10px] text-emerald-400 font-medium flex items-center gap-1 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Online Assistant

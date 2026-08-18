@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Download } from 'lucide-react';
+import { Download, Sparkles } from 'lucide-react';
 import { personal } from '../../data/portfolio';
 import ThemeToggle from '../ui/ThemeToggle';
 
@@ -95,6 +95,13 @@ export default function Navbar() {
               </a>
             )}
             <button
+              onClick={() => window.dispatchEvent(new Event('toggle-ai-assistant'))}
+              className="btn-secondary text-sm py-2 px-4 ml-1 flex items-center gap-1.5 border border-blue-500/20 hover:border-blue-500/50 hover:bg-blue-600/10 text-blue-400 font-medium cursor-pointer"
+            >
+              <Sparkles size={13} className="animate-pulse" />
+              Ask AI
+            </button>
+            <button
               onClick={() => handleNav('#contact')}
               className="btn-primary text-sm py-2 px-5 ml-1"
             >
@@ -104,6 +111,13 @@ export default function Navbar() {
 
           {/* Mobile: theme toggle + hamburger */}
           <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => window.dispatchEvent(new Event('toggle-ai-assistant'))}
+              className="p-2 rounded-lg bg-blue-600/10 border border-blue-500/20 text-blue-400 hover:text-white hover:bg-blue-600/20 transition-all flex items-center justify-center cursor-pointer"
+              aria-label="Toggle AI Assistant"
+            >
+              <Sparkles size={16} className="animate-pulse" />
+            </button>
             <ThemeToggle />
             <button
               className="flex flex-col gap-1.5 p-2"
@@ -170,6 +184,16 @@ export default function Navbar() {
                 Resume
               </a>
             )}
+            <button
+              onClick={() => {
+                setMenuOpen(false);
+                window.dispatchEvent(new Event('toggle-ai-assistant'));
+              }}
+              className="btn-secondary flex items-center gap-1.5 border border-blue-500/20 text-blue-400 font-medium"
+            >
+              <Sparkles size={13} className="animate-pulse" />
+              Ask AI
+            </button>
             <button
               onClick={() => handleNav('#contact')}
               className="btn-primary"
