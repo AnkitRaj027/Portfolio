@@ -24,7 +24,7 @@ export const personal = {
   },
   githubUsername: "AnkitRaj027", // ← Your GitHub username for stats section
   openToWork: true, // ← Set to false to hide the Open to Work banner
-  resume: "/resume.pdf", // ← Set to "/resume.pdf" after dropping your PDF in /public
+  resume: "/Ankit_Raj_Resume.pdf", // ← Set to "/resume.pdf" after dropping your PDF in /public
 };
 
 export const about = {
