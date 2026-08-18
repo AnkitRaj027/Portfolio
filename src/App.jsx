@@ -12,6 +12,7 @@ import CustomCursor      from './components/ui/CustomCursor';
 import BackToTop         from './components/ui/BackToTop';
 import OpenToWorkBanner  from './components/ui/OpenToWorkBanner';
 import TechTicker        from './components/ui/TechTicker';
+import AIAssistant       from './components/ui/AIAssistant';
 
 // Sections
 import Hero              from './components/sections/Hero';
@@ -51,6 +52,7 @@ function PortfolioApp() {
         <CustomCursor />
         <ScrollProgress />
         <BackToTop />
+        <AIAssistant />
 
         {/* Open to work banner above navbar */}
         <OpenToWorkBanner />
