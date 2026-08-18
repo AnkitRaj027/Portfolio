@@ -14,9 +14,9 @@ function CertModal({ cert, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
         <motion.div
-          className="glass-strong relative z-10 rounded-2xl p-6 max-w-md w-full"
+          className="glass-strong relative z-10 rounded-2xl p-6 max-w-lg w-full overflow-hidden"
           style={{ border: '1px solid var(--border-accent)' }}
           initial={{ scale: 0.92, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -25,32 +25,56 @@ function CertModal({ cert, onClose }) {
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
+            className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors z-20 bg-slate-900/60 p-1.5 rounded-full backdrop-blur-sm"
           >
             <X size={18} />
           </button>
-          <div className="mb-4">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-              style={{ background: 'var(--accent-dim)' }}
-            >
-              <Award size={22} style={{ color: 'var(--accent)' }} />
+          
+          {cert.image && (
+            <div className="mb-6 rounded-xl overflow-hidden border border-slate-800 bg-slate-950 flex items-center justify-center max-h-[320px]">
+              <img 
+                src={cert.image} 
+                alt={cert.name} 
+                className="w-full h-auto max-h-[320px] object-contain hover:scale-[1.02] transition-transform duration-300"
+              />
             </div>
-            <h3 className="font-display text-lg font-bold text-white mb-1">{cert.name}</h3>
-            <p style={{ color: 'var(--accent)' }} className="text-sm font-medium">{cert.issuer}</p>
-            <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{cert.date}</p>
-          </div>
-          {cert.credentialUrl && cert.credentialUrl !== '#' && (
-            <a
-              href={cert.credentialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary w-full justify-center"
-            >
-              <ExternalLink size={15} />
-              View Credential
-            </a>
           )}
+
+          <div className="mb-6">
+            <div className="flex gap-4 items-start">
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'var(--accent-dim)' }}
+              >
+                <Award size={22} style={{ color: 'var(--accent)' }} />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-bold text-white leading-snug mb-1">{cert.name}</h3>
+                <p style={{ color: 'var(--accent)' }} className="text-sm font-medium">{cert.issuer}</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{cert.date}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex gap-3">
+            {cert.credentialUrl && cert.credentialUrl !== '#' && (
+              <a
+                href={cert.credentialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary flex-grow justify-center py-2.5"
+              >
+                <ExternalLink size={15} />
+                Verify Credential
+              </a>
+            )}
+            <button
+              onClick={onClose}
+              className="px-5 py-2.5 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-colors"
+            >
+              Close
+            </button>
+          </div>
         </motion.div>
       </motion.div>
     </AnimatePresence>
@@ -82,37 +106,63 @@ export default function Certifications() {
           />
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {certifications.map((cert, i) => (
             <motion.button
               key={cert.id}
-              className="glass rounded-xl p-5 text-left w-full glow-accent-hover transition-all"
+              className="glass rounded-xl overflow-hidden text-left w-full glow-accent-hover transition-all flex flex-col h-full group"
               style={{ border: '1px solid var(--border)' }}
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               onClick={() => setSelected(cert)}
-              whileHover={{ y: -3 }}
+              whileHover={{ y: -4 }}
             >
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-                style={{ background: 'var(--accent-dim)' }}
-              >
-                <Award size={18} style={{ color: 'var(--accent)' }} />
-              </div>
-              <h3 className="font-display font-bold text-white mb-1 text-sm leading-snug">
-                {cert.name}
-              </h3>
-              <p className="text-xs mb-1" style={{ color: 'var(--accent)' }}>
-                {cert.issuer}
-              </p>
-              <div className="flex items-center justify-between mt-3">
-                <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-muted)' }}>
-                  <Calendar size={11} /> {cert.date}
-                </span>
-                <span className="text-xs" style={{ color: 'var(--accent)' }}>
-                  View →
-                </span>
+              {cert.image ? (
+                <div className="w-full aspect-[16/10] overflow-hidden border-b border-slate-800 bg-slate-950 relative">
+                  <img
+                    src={cert.image}
+                    alt={cert.name}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60" />
+                </div>
+              ) : (
+                <div className="p-5 pb-0">
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center animate-pulse"
+                    style={{ background: 'var(--accent-dim)' }}
+                  >
+                    <Award size={18} style={{ color: 'var(--accent)' }} />
+                  </div>
+                </div>
+              )}
+              
+              <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                  {!cert.image && (
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+                      style={{ background: 'var(--accent-dim)' }}
+                    >
+                      <Award size={18} style={{ color: 'var(--accent)' }} />
+                    </div>
+                  )}
+                  <h3 className="font-display font-bold text-white mb-1 text-sm leading-snug">
+                    {cert.name}
+                  </h3>
+                  <p className="text-xs mb-1" style={{ color: 'var(--accent)' }}>
+                    {cert.issuer}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-800/40">
+                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-muted)' }}>
+                    <Calendar size={11} /> {cert.date}
+                  </span>
+                  <span className="text-xs font-semibold flex items-center gap-0.5 animate-pulse" style={{ color: 'var(--accent)' }}>
+                    View →
+                  </span>
+                </div>
               </div>
             </motion.button>
           ))}

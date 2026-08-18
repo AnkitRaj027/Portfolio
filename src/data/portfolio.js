@@ -84,6 +84,7 @@ export const skills = [
       { name: "Streamlit", description: "Rapid prototyping and deployment of ML demos." },
       { name: "FastAPI", description: "High-performance Python API development." },
       { name: "REST APIs", description: "Designing and consuming RESTful web services." },
+      { name: "Gradio", description: "Quickly and easily create demos for ML models." },
     ],
   },
   {
@@ -102,13 +103,13 @@ export const skills = [
 export const projects = [
   {
     id: "smart-resume-ranker",
-    title: "Smart Resume Ranker",
+    title: "ResumeAnalyzer",
     shortDesc: "ML-powered resume screening and ranking system.",
     description:
       "An intelligent resume screening system that uses NLP, TF-IDF vectorization, and cosine similarity to match resumes against job descriptions. Features skill extraction, automated ranking, and a clean web interface.",
     tags: ["Python", "NLP", "TF-IDF", "Scikit-learn", "Streamlit"],
-    github: "https://github.com/ankitraj/smart-resume-ranker", // ← Update
-    demo: null, // ← Add live demo URL if available
+    github: "https://github.com/AnkitRaj027/ResumeAnalyzer", // ← Update
+    demo: "https://resumesinsight.streamlit.app/", // ← Add live demo URL if available
     featured: true,
     gradient: "from-blue-600/20 to-violet-600/20",
     accentColor: "#3b82f6",
@@ -127,8 +128,8 @@ export const projects = [
     description:
       "An AI/finance-oriented application designed to help users understand and manage financial information intelligently. Leverages generative AI to provide contextual financial guidance.",
     tags: ["Python", "LangChain", "RAG", "FastAPI", "React"],
-    github: "https://github.com/ankitraj/pocket-ca", // ← Update
-    demo: "https://rewritingmyself.vercel.app/", // ← Add live demo URL if available
+    github: "https://github.com/AnkitRaj027/PocketCA", // ← Update
+    demo: "https://pocketca.streamlit.app/", // ← Add live demo URL if available
     featured: true,
     gradient: "from-emerald-600/20 to-cyan-600/20",
     accentColor: "#10b981",
@@ -147,8 +148,8 @@ export const projects = [
     description:
       "A fault-tolerant distributed file system featuring file replication across nodes, node management, failure detection and handling. Built with a focus on consistency and availability.",
     tags: ["Python", "Distributed Systems", "Networking", "Replication"],
-    github: "https://github.com/ankitraj/distributed-file-system", // ← Update
-    demo: null,
+    github: "https://github.com/AnkitRaj027/DistributedFileSystem", // ← Update
+    demo: "https://filesystemdistributed.vercel.app/",
     featured: true,
     gradient: "from-orange-600/20 to-red-600/20",
     accentColor: "#f97316",
@@ -168,7 +169,7 @@ export const experience = [
     id: "exp-1",
     type: "hackathon", // hackathon | competition | certification | workshop | achievement
     title: "Hackathon Participant", // ← Replace with actual event name
-    organization: "Event Organizer", // ← Replace
+    organization: "OnDemand", // ← Replace
     date: "2024", // ← Replace
     description: "Participated in a 24-hour hackathon building an AI-powered solution.", // ← Replace
     icon: "Trophy",
@@ -177,22 +178,23 @@ export const experience = [
   {
     id: "exp-2",
     type: "workshop",
-    title: "Workshop / Training", // ← Replace
-    organization: "Organization Name", // ← Replace
-    date: "2024", // ← Replace
+    title: "CPP Programming", // ← Replace
+    organization: "Let's upgrade", // ← Replace
+    date: "2025", // ← Replace
     description: "Attended a hands-on workshop on advanced ML concepts and practical applications.", // ← Replace
     icon: "BookOpen",
-    tags: ["Machine Learning"],
+    tags: ["CPP"],
   },
   {
     id: "exp-3",
-    type: "achievement",
-    title: "Notable Achievement", // ← Replace
-    organization: "Platform / Organization", // ← Replace
-    date: "2024", // ← Replace
-    description: "Description of the achievement and its significance.", // ← Replace
-    icon: "Star",
-    tags: [],
+    type: "Community Development",
+    title: "Cybersecurity Awareness & Digital Safety",
+    organization: "WNS Cares Foundation",
+    date: "2025",
+    description:
+      "Conducted cybersecurity awareness sessions for children, adults, and senior citizens, helping participants understand online safety, cyber threats, phishing, scams, password security, and responsible digital practices.",
+    icon: "ShieldCheck",
+    tags: ["Cybersecurity", "Digital Safety", "Awareness", "Community Outreach"],
   },
 ];
 
@@ -202,7 +204,7 @@ export const education = [
     institution: "Lovely Professional University",
     location: "Punjab, India",
     duration: "2022 – 2026", // ← Update if needed
-    cgpa: null, // ← Add your CGPA e.g. "8.5 / 10"
+    cgpa: "8.85", // ← Add your CGPA e.g. "8.5 / 10"
     coursework: [
       "Machine Learning",
       "Deep Learning",
@@ -223,30 +225,57 @@ export const education = [
 export const certifications = [
   {
     id: "cert-1",
-    name: "Certification Name", // ← Replace
-    issuer: "Issuing Organization", // ← Replace e.g. Coursera, Google, etc.
-    date: "2024", // ← Replace
-    credentialUrl: "#", // ← Replace with actual credential URL
-    image: null, // ← Add certificate image path
-    tags: ["AI", "ML"],
+    name: "Google AI Professional Certificate", // ← Replace
+    issuer: "Google", // ← Replace e.g. Coursera, Google, etc.
+    date: "2026", // ← Replace
+    credentialUrl: "https://www.coursera.org/account/accomplishments/specialization/37TPTIH54V76", // ← Replace with actual credential URL
+    image: "/googleai.png", // ← Add certificate image path
+    tags: ["AI", "ML", "GEMINI"],
   },
   {
     id: "cert-2",
-    name: "Another Certification", // ← Replace
-    issuer: "Issuing Organization", // ← Replace
-    date: "2024", // ← Replace
-    credentialUrl: "#", // ← Replace
-    image: null,
+    name: "Programming in Python", // ← Replace
+    issuer: "Google", // ← Replace
+    date: "2026", // ← Replace
+    credentialUrl: "https://coursera.org/share/412e01a65ac6497934d8ee3729c96da9", // ← Replace
+    image: "/python.png",
     tags: ["Python"],
   },
   {
     id: "cert-3",
-    name: "Another Certification", // ← Replace
-    issuer: "Issuing Organization", // ← Replace
-    date: "2024", // ← Replace
+    name: "Prompt Engineering", // ← Replace
+    issuer: "Vanderbilt University", // ← Replace
+    date: "2026", // ← Replace
     credentialUrl: "#", // ← Replace
-    image: null,
-    tags: ["Python"],
+    image: "/prompt.png",
+    tags: ["AI", "Prompt Engineering"],
+  },
+  {
+    id: "cert-4",
+    name: "Building RAG Applications", // ← Replace
+    issuer: "IBM", // ← Replace
+    date: "2026", // ← Replace
+    credentialUrl: "https://coursera.org/share/95aa618c057142c277ff92c8426e60aa", // ← Replace
+    image: "/rag.png",
+    tags: ["AI", "RAG"],
+  },
+  {
+    id: "cert-5",
+    name: "Generative AI Application", // ← Replace
+    issuer: "IBM", // ← Replace
+    date: "2026", // ← Replace
+    credentialUrl: "https://coursera.org/share/69130781fb6d2047ff17011aab3be8e3", // ← Replace
+    image: "/gen.png",
+    tags: ["AI", "Generative AI", "GenAI", "RAG", "LLM"],
+  },
+  {
+    id: "cert-6",
+    name: "Java", // ← Replace
+    issuer: "iamneo", // ← Replace
+    date: "2026", // ← Replace
+    credentialUrl: "#", // ← Replace
+    image: "/java.png",
+    tags: ["Java"],
   },
   // ← Add more certifications
 ];
