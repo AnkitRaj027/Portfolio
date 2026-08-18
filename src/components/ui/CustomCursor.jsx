@@ -16,19 +16,14 @@ export default function CustomCursor() {
       pos.current = { x: e.clientX, y: e.clientY };
     };
 
-    const addHover = () => setHovered(true);
-    const removeHover = () => setHovered(false);
+    const handleMouseOver = (e) => {
+      if (!e.target) return;
+      const isInteractive = e.target.closest('a, button, [role="button"], input, textarea, .skill-card, .project-card, .tag, select');
+      setHovered(!!isInteractive);
+    };
 
     window.addEventListener('mousemove', move);
-
-    // Track hover on interactive elements
-    const interactives = document.querySelectorAll(
-      'a, button, [role="button"], input, textarea, .skill-card, .project-card'
-    );
-    interactives.forEach((el) => {
-      el.addEventListener('mouseenter', addHover);
-      el.addEventListener('mouseleave', removeHover);
-    });
+    window.addEventListener('mouseover', handleMouseOver);
 
     const animate = () => {
       if (cursorRef.current) {
@@ -48,6 +43,7 @@ export default function CustomCursor() {
 
     return () => {
       window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(raf.current);
     };
   }, []);

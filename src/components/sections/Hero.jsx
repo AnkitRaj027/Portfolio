@@ -25,6 +25,22 @@ function NetworkCanvas() {
     resize();
     window.addEventListener('resize', resize);
 
+    const mouse = { x: null, y: null };
+
+    const handleMouseMove = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.x = null;
+      mouse.y = null;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+
     const COUNT = window.innerWidth < 600 ? 28 : 52;
     for (let i = 0; i < COUNT; i++) {
       nodes.push({
@@ -40,6 +56,35 @@ function NetworkCanvas() {
     const MAX_DIST = 140;
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
+
+      // Repel nodes from mouse and draw cursor connections
+      if (mouse.x !== null && mouse.y !== null) {
+        nodes.forEach((n) => {
+          const dx = n.x - mouse.x;
+          const dy = n.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const activeDist = 180;
+          if (dist < activeDist) {
+            const alpha = (1 - dist / activeDist) * 0.35;
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(59,130,246,${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(n.x, n.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+
+            // Repulsion force
+            const repelDist = 100;
+            if (dist < repelDist) {
+              const force = (repelDist - dist) * 0.04;
+              const angle = Math.atan2(dy, dx);
+              n.x += Math.cos(angle) * force;
+              n.y += Math.sin(angle) * force;
+            }
+          }
+        });
+      }
+
       nodes.forEach((n) => {
         n.x += n.vx;
         n.y += n.vy;
@@ -76,6 +121,8 @@ function NetworkCanvas() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
