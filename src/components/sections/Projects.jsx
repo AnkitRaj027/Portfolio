@@ -57,7 +57,7 @@ function ProjectCard({ project, index, inView, onOpen }) {
       <div className="p-6">
         <h3 className="font-display text-xl font-bold text-white mb-2">{project.title}</h3>
         <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-          {project.description}
+          {project.shortDesc || project.description}
         </p>
 
         {/* Tags */}
