@@ -141,6 +141,26 @@ export const projects = [
       "Designed to help users understand financial concepts and manage money",
     ],
   },
+  {
+    id: "distributed-file-system",
+    title: "Distributed File System",
+    shortDesc: "Fault-tolerant distributed storage with replication.",
+    description:
+      "A fault-tolerant distributed file system featuring file replication across nodes, node management, failure detection and handling. Built with a focus on consistency and availability.",
+    tags: ["Python", "Distributed Systems", "Networking", "Replication"],
+    github: "https://github.com/AnkitRaj027/DistributedFileSystem", // ← Update
+    demo: "https://filesystemdistributed.vercel.app/",
+    featured: true,
+    gradient: "from-orange-600/20 to-red-600/20",
+    accentColor: "#f97316",
+    details: [
+      "Files replicated across multiple nodes for fault tolerance",
+      "Automatic failure detection with node health monitoring",
+      "Consistent file access even during partial node failures",
+      "Custom replication factor configurable per file type",
+      "REST API for file upload, download, and management operations",
+    ],
+  },
 ];
 
 export const experience = [
