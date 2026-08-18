@@ -112,6 +112,9 @@ function ProjectCard({ project, index, inView, onOpen }) {
 export default function Projects() {
   const [ref, inView] = useInView();
   const [selectedProject, setSelectedProject] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const displayedProjects = showAll ? projects : projects.slice(0, 3);
 
   return (
     <section id="projects" className="py-24 px-6" ref={ref}>
@@ -131,7 +134,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, i) => (
+          {displayedProjects.map((project, i) => (
             <ProjectCard
               key={project.id}
               project={project}
@@ -141,6 +144,18 @@ export default function Projects() {
             />
           ))}
         </div>
+
+        {projects.length > 3 && (
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="px-6 py-3 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-300 flex items-center gap-2 hover:bg-slate-900/40"
+            >
+              {showAll ? 'Show Less' : 'Show More Projects'}
+              <ArrowRight size={16} className={`transition-transform duration-300 ${showAll ? '-rotate-90' : 'rotate-90'}`} />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Project detail modal */}

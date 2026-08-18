@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, X, Award, Calendar } from 'lucide-react';
+import { ExternalLink, X, Award, Calendar, ChevronDown } from 'lucide-react';
 import { certifications } from '../../data/portfolio';
 import useInView from '../../hooks/useInView';
 import SectionHeader from '../ui/SectionHeader';
@@ -84,6 +84,9 @@ function CertModal({ cert, onClose }) {
 export default function Certifications() {
   const [ref, inView] = useInView();
   const [selected, setSelected] = useState(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const displayedCerts = showAll ? certifications : certifications.slice(0, 3);
 
   return (
     <section
@@ -107,7 +110,7 @@ export default function Certifications() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certifications.map((cert, i) => (
+          {displayedCerts.map((cert, i) => (
             <motion.button
               key={cert.id}
               className="glass rounded-xl overflow-hidden text-left w-full glow-accent-hover transition-all flex flex-col h-full group"
@@ -167,6 +170,18 @@ export default function Certifications() {
             </motion.button>
           ))}
         </div>
+
+        {certifications.length > 3 && (
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="px-6 py-3 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-300 flex items-center gap-2 hover:bg-slate-900/40"
+            >
+              {showAll ? 'Show Less' : 'Show More Certifications'}
+              <ChevronDown size={16} className={`transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+        )}
       </div>
 
       {selected && <CertModal cert={selected} onClose={() => setSelected(null)} />}
