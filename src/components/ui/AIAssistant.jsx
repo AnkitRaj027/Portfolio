@@ -2,11 +2,14 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, User, Send, X, Sparkles, MessageSquare, CornerDownLeft } from 'lucide-react';
 import { personal, projects, skills, education, certifications } from '../../data/portfolio';
+import { useTheme } from '../../context/ThemeContext';
 
 // Simulated typing speed configuration
 const TYPING_DELAY = 15; // ms per char
 
 export default function AIAssistant() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -112,20 +115,26 @@ export default function AIAssistant() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-6 right-6 md:right-8 z-50 w-[350px] sm:w-[380px] h-[520px] rounded-2xl glass-strong shadow-2xl flex flex-col overflow-hidden border border-slate-800"
+            className={`fixed bottom-6 right-6 md:right-8 z-50 w-[350px] sm:w-[380px] h-[520px] rounded-2xl glass-strong shadow-2xl flex flex-col overflow-hidden border ${
+              isLight ? 'border-slate-200' : 'border-slate-800'
+            }`}
             initial={{ opacity: 0, y: 32, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 32, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 220 }}
           >
             {/* Header */}
-            <div className="p-4 bg-slate-950/80 border-b border-slate-900 flex items-center justify-between">
+            <div className={`p-4 border-b flex items-center justify-between ${
+              isLight ? 'bg-slate-50/90 border-slate-200' : 'bg-slate-950/80 border-slate-900'
+            }`}>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
                   <Sparkles size={16} className="animate-pulse" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-display font-bold text-white leading-none">AI</h4>
+                  <h4 className={`text-sm font-display font-bold leading-none ${
+                    isLight ? 'text-slate-900' : 'text-white'
+                  }`}>AI</h4>
                   <span className="text-[10px] text-emerald-400 font-medium flex items-center gap-1 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Online Assistant
@@ -134,14 +143,18 @@ export default function AIAssistant() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-slate-400 hover:text-white p-1 hover:bg-slate-900 rounded-lg transition-colors"
+                className={`p-1 rounded-lg transition-colors ${
+                  isLight ? 'text-slate-500 hover:text-slate-900 hover:bg-slate-100' : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                }`}
               >
                 <X size={16} />
               </button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-950/45 scrollbar-thin">
+            <div className={`flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin ${
+              isLight ? 'bg-slate-50/30' : 'bg-slate-950/45'
+            }`}>
               {messages.map((msg, i) => (
                 <div
                   key={i}
@@ -156,8 +169,10 @@ export default function AIAssistant() {
                     <div
                       className={`rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-white rounded-tr-none'
-                          : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none whitespace-pre-wrap'
+                          ? 'bg-blue-600 text-slate-50 rounded-tr-none font-medium'
+                          : isLight
+                            ? 'bg-white border border-slate-200/80 text-slate-800 rounded-tl-none whitespace-pre-wrap font-medium'
+                            : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none whitespace-pre-wrap'
                       }`}
                     >
                       {msg.text.split('\n').map((para, idx) => {
@@ -183,7 +198,9 @@ export default function AIAssistant() {
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-400 hover:underline font-semibold"
+                                    className={`font-semibold hover:underline ${
+                                      isLight ? 'text-blue-600 hover:text-blue-700' : 'text-blue-400 hover:text-blue-300'
+                                    }`}
                                   >
                                     {link.text}
                                   </a>,
@@ -200,7 +217,7 @@ export default function AIAssistant() {
                         const boldParts = para.split('**');
                         if (boldParts.length > 1) {
                           const nodes = boldParts.map((part, index) => 
-                            index % 2 === 1 ? <strong key={index} className="text-white font-semibold">{part}</strong> : part
+                            index % 2 === 1 ? <strong key={index} className={`font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>{part}</strong> : part
                           );
                           return <p key={idx} className={idx > 0 ? 'mt-1.5' : ''}>{nodes}</p>;
                         }
@@ -219,10 +236,12 @@ export default function AIAssistant() {
                     <div className="w-6 h-6 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0 text-blue-400">
                       <Bot size={13} />
                     </div>
-                    <div className="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none px-4 py-3 flex gap-1 items-center">
-                      <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <div className={`rounded-2xl rounded-tl-none px-4 py-3 flex gap-1 items-center ${
+                      isLight ? 'bg-white border border-slate-200/80' : 'bg-slate-900 border border-slate-800'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isLight ? 'bg-slate-400' : 'bg-slate-500'}`} style={{ animationDelay: '0ms' }} />
+                      <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isLight ? 'bg-slate-400' : 'bg-slate-500'}`} style={{ animationDelay: '150ms' }} />
+                      <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isLight ? 'bg-slate-400' : 'bg-slate-500'}`} style={{ animationDelay: '300ms' }} />
                     </div>
                   </div>
                 </div>
@@ -232,12 +251,18 @@ export default function AIAssistant() {
             </div>
 
             {/* Quick Suggestions Chips */}
-            <div className="p-3 bg-slate-950/20 border-t border-slate-900 flex flex-wrap gap-1.5 max-h-[85px] overflow-y-auto scrollbar-none">
+            <div className={`p-3 border-t flex flex-wrap gap-1.5 max-h-[85px] overflow-y-auto scrollbar-none ${
+              isLight ? 'bg-slate-50/50 border-slate-200/80' : 'bg-slate-950/20 border-slate-900'
+            }`}>
               {quickQuestions.map((chip) => (
                 <button
                   key={chip.label}
                   onClick={() => handleSend(chip.query)}
-                  className="px-2.5 py-1 text-[10px] rounded-full border border-slate-800 hover:border-blue-500/40 bg-slate-900/60 hover:bg-blue-600/10 text-slate-300 hover:text-blue-400 font-medium transition-all"
+                  className={`px-2.5 py-1 text-[10px] rounded-full font-medium transition-all ${
+                    isLight
+                      ? 'border border-slate-200 bg-white hover:bg-blue-50 hover:border-blue-300 text-slate-600 hover:text-blue-600'
+                      : 'border border-slate-800 bg-slate-900/60 hover:bg-blue-600/10 hover:border-blue-500/40 text-slate-300 hover:text-blue-400'
+                  }`}
                 >
                   {chip.label}
                 </button>
@@ -250,18 +275,24 @@ export default function AIAssistant() {
                 e.preventDefault();
                 handleSend(inputValue);
               }}
-              className="p-3 bg-slate-950/80 border-t border-slate-900 flex gap-2"
+              className={`p-3 border-t flex gap-2 ${
+                isLight ? 'bg-white border-slate-200/80' : 'bg-slate-950/80 border-slate-900'
+              }`}
             >
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask about projects, skills, contact..."
-                className="flex-grow bg-slate-900 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none transition-colors"
+                className={`flex-grow border rounded-lg px-3 py-1.5 text-xs focus:outline-none transition-colors ${
+                  isLight
+                    ? 'bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-900 placeholder-slate-400'
+                    : 'bg-slate-900 border-slate-800 focus:border-blue-500 text-white placeholder-slate-500'
+                }`}
               />
               <button
                 type="submit"
-                className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center transition-colors shadow-lg cursor-pointer shrink-0"
+                className="w-8 h-8 rounded-lg bg-blue-600 hover:bg-blue-500 text-slate-50 flex items-center justify-center transition-colors shadow-lg cursor-pointer shrink-0"
               >
                 <Send size={14} />
               </button>
