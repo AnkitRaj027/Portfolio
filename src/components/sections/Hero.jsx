@@ -4,6 +4,8 @@ import { ArrowRight, Mail, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../ui/BrandIcons';
 import { personal } from '../../data/portfolio';
 import { useTheme } from '../../context/ThemeContext';
+import useParticleBurst from '../../hooks/useParticleBurst';
+import { useSound } from '../../context/SoundContext';
 
 /* ── AI Network Canvas ─────────────────────────────────── */
 function NetworkCanvas() {
@@ -149,6 +151,8 @@ const item = {
 /* ── Hero ──────────────────────────────────────────────── */
 export default function Hero() {
   const { theme } = useTheme();
+  const burst = useParticleBurst();
+  const { playSound } = useSound();
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -230,15 +234,34 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <motion.div variants={item} className="flex flex-wrap gap-4 justify-center mb-10">
-            <button className="btn-primary" onClick={() => scrollToSection('projects')}>
+            <button
+              className="btn-primary"
+              onClick={(e) => {
+                scrollToSection('projects');
+                burst(e.currentTarget);
+                playSound('pop');
+              }}
+            >
               View My Work
               <ArrowRight size={16} />
             </button>
-            <button className="btn-secondary" onClick={() => scrollToSection('contact')}>
+            <button
+              className="btn-secondary"
+              onClick={(e) => {
+                scrollToSection('contact');
+                burst(e.currentTarget, { particleCount: 40, spread: 55, scalar: 0.75 });
+                playSound('pop');
+              }}
+            >
               Let's Connect
             </button>
             {personal.resume && (
-              <a href={personal.resume} download className="btn-download">
+              <a
+                href={personal.resume}
+                download
+                className="btn-download"
+                onClick={(e) => burst(e.currentTarget, { minimal: true, particleCount: 25 })}
+              >
                 <Download size={14} />
                 Download CV
               </a>

@@ -1,8 +1,93 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
 import { GithubIcon } from './BrandIcons';
 
+/* ── Parallax Modal Header ─────────────────────────────── */
+function ModalParallaxHeader({ project, onClose }) {
+  const containerRef = useRef(null);
+  const [parallaxY, setParallaxY] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
+
+  const handleMouseMove = (e) => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+    setParallaxY(relY * -20); // ±10px shift
+  };
+
+  const handleMouseLeave = () => setParallaxY(0);
+  const hasImage = project.previewImage && !errored;
+
+  return (
+    <div
+      ref={containerRef}
+      className={`h-48 bg-gradient-to-br ${project.gradient} relative overflow-hidden flex-shrink-0`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Parallax image */}
+      {project.previewImage && (
+        <img
+          src={project.previewImage}
+          alt={`${project.title} preview`}
+          onLoad={() => setLoaded(true)}
+          onError={() => setErrored(true)}
+          className="absolute inset-0 w-full h-full object-cover object-top"
+          style={{
+            transform: `scale(1.15) translateY(${parallaxY}px)`,
+            opacity: loaded && !errored ? 1 : 0,
+            transition: 'transform 0.12s ease-out, opacity 0.4s ease',
+          }}
+        />
+      )}
+
+      {/* Gradient overlay for readability */}
+      {hasImage && loaded && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.6) 100%)',
+          }}
+        />
+      )}
+
+      {/* Decorative SVG fallback */}
+      {!hasImage && (
+        <div className="absolute inset-0 flex items-center justify-center opacity-8">
+          <svg width="220" height="160" viewBox="0 0 220 160" fill="none" className="opacity-10">
+            <circle cx="110" cy="80" r="60" stroke="white" strokeWidth="1" />
+            <circle cx="110" cy="80" r="40" stroke="white" strokeWidth="1" />
+            <line x1="50" y1="80" x2="170" y2="80" stroke="white" strokeWidth="1" />
+            <line x1="110" y1="20" x2="110" y2="140" stroke="white" strokeWidth="1" />
+            <circle cx="110" cy="80" r="8" fill="white" />
+          </svg>
+        </div>
+      )}
+
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all z-10"
+        style={{ background: 'rgba(0,0,0,0.45)', color: 'white' }}
+        aria-label="Close"
+      >
+        <X size={16} />
+      </button>
+
+      {/* Label */}
+      <span
+        className="absolute bottom-4 left-6 text-xs font-bold font-display tracking-widest z-10"
+        style={{ color: hasImage && loaded ? 'rgba(255,255,255,0.85)' : project.accentColor }}
+      >
+        Featured Project
+      </span>
+    </div>
+  );
+}
+
+/* ── Modal ─────────────────────────────────────────────── */
 export default function ProjectModal({ project, onClose }) {
   // Close on Escape
   useEffect(() => {
@@ -53,36 +138,8 @@ export default function ProjectModal({ project, onClose }) {
           aria-modal="true"
           aria-label={project.title}
         >
-          {/* Gradient header */}
-          <div
-            className={`h-40 bg-gradient-to-br ${project.gradient} relative overflow-hidden flex-shrink-0`}
-          >
-            <div className="absolute inset-0 flex items-center justify-center opacity-8">
-              <svg width="220" height="160" viewBox="0 0 220 160" fill="none" className="opacity-10">
-                <circle cx="110" cy="80" r="60" stroke="white" strokeWidth="1" />
-                <circle cx="110" cy="80" r="40" stroke="white" strokeWidth="1" />
-                <line x1="50" y1="80" x2="170" y2="80" stroke="white" strokeWidth="1" />
-                <line x1="110" y1="20" x2="110" y2="140" stroke="white" strokeWidth="1" />
-                <circle cx="110" cy="80" r="8" fill="white" />
-              </svg>
-            </div>
-            {/* Close button */}
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-all"
-              style={{ background: 'rgba(0,0,0,0.4)', color: 'white' }}
-              aria-label="Close"
-            >
-              <X size={16} />
-            </button>
-            {/* Project number */}
-            <span
-              className="absolute bottom-4 left-6 text-xs font-bold font-display tracking-widest"
-              style={{ color: project.accentColor }}
-            >
-              Featured Project
-            </span>
-          </div>
+          {/* Parallax header */}
+          <ModalParallaxHeader project={project} onClose={onClose} />
 
           {/* Content */}
           <div className="p-6 md:p-8">

@@ -1,41 +1,134 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, Maximize2 } from 'lucide-react';
+import { ExternalLink, ArrowRight, Maximize2, ImageOff } from 'lucide-react';
 import { GithubIcon } from '../ui/BrandIcons';
 import { projects } from '../../data/portfolio';
 import useInView from '../../hooks/useInView';
 import SectionHeader from '../ui/SectionHeader';
 import ProjectModal from '../ui/ProjectModal';
 
+/* ── Parallax Image Header ─────────────────────────────── */
+function ParallaxImageHeader({ project, index, isHovered, glow }) {
+  const imgRef = useRef(null);
+  const [parallaxY, setParallaxY] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
+
+  // Reset on hover state change
+  useEffect(() => {
+    if (!isHovered) setParallaxY(0);
+  }, [isHovered]);
+
+  const hasImage = project.previewImage && !errored;
+
+  return (
+    <div
+      className="h-40 relative overflow-hidden group/header"
+      style={{ borderBottom: '1px solid var(--border)', zIndex: 1 }}
+    >
+      {/* Image layer */}
+      {project.previewImage && (
+        <img
+          ref={imgRef}
+          src={project.previewImage}
+          alt={`${project.title} preview`}
+          onLoad={() => setLoaded(true)}
+          onError={() => setErrored(true)}
+          className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-100"
+          style={{
+            transform: `scale(1.12) translateY(${parallaxY}px)`,
+            opacity: loaded && !errored ? 1 : 0,
+            transition: isHovered
+              ? 'transform 0.08s ease-out, opacity 0.4s ease'
+              : 'transform 0.35s ease-in-out, opacity 0.4s ease',
+          }}
+        />
+      )}
+
+      {/* Gradient overlay — always present; also serves as fallback */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} transition-opacity duration-300`}
+        style={{ opacity: hasImage && loaded ? 0.55 : 1 }}
+      />
+
+      {/* Dark vignette at bottom for text legibility */}
+      {hasImage && loaded && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 100%)',
+          }}
+        />
+      )}
+
+      {/* Decorative SVG (shown when no image) */}
+      {!hasImage && (
+        <div className="absolute inset-0 flex items-center justify-center opacity-10">
+          <svg width="180" height="120" viewBox="0 0 180 120" fill="none">
+            <circle cx="90" cy="60" r="50" stroke="white" strokeWidth="1" />
+            <circle cx="90" cy="60" r="30" stroke="white" strokeWidth="1" />
+            <line x1="40" y1="60" x2="140" y2="60" stroke="white" strokeWidth="1" />
+            <line x1="90" y1="10" x2="90" y2="110" stroke="white" strokeWidth="1" />
+            <circle cx="90" cy="60" r="6" fill="white" />
+          </svg>
+        </div>
+      )}
+
+      {/* Glow orb */}
+      <div
+        className="absolute -top-4 -right-4 w-24 h-24 rounded-full blur-2xl"
+        style={{ background: project.accentColor + '30' }}
+      />
+
+      {/* Project index badge */}
+      <span
+        className="absolute top-4 left-4 text-xs font-bold font-display tracking-widest z-10"
+        style={{ color: hasImage && loaded ? 'rgba(255,255,255,0.9)' : project.accentColor }}
+      >
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      {/* Open modal hint */}
+      <div
+        className="absolute top-4 right-4 w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover/header:opacity-100 transition-opacity z-10"
+        style={{ background: 'rgba(0,0,0,0.5)', color: 'white' }}
+      >
+        <Maximize2 size={12} />
+      </div>
+    </div>
+  );
+}
+
+/* ── Project Card ─────────────────────────────────────── */
 function ProjectCard({ project, index, inView, onOpen }) {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [glow, setGlow] = useState({ x: 0, y: 0 });
+  const [parallaxY, setParallaxY] = useState(0);
+  const imgRef = useRef(null);
 
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-
-    // rotation values (-8deg to 8deg)
     const rotateX = ((centerY - y) / centerY) * 8;
     const rotateY = ((x - centerX) / centerX) * 8;
-
     setTilt({ x: rotateX, y: rotateY });
     setGlow({ x, y });
+
+    // Parallax: image shifts slightly opposite to mouse
+    const py = ((y / rect.height) - 0.5) * -14;
+    setParallaxY(py);
   };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
+  const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => {
     setIsHovered(false);
     setTilt({ x: 0, y: 0 });
+    setParallaxY(0);
   };
 
   return (
@@ -68,38 +161,14 @@ function ProjectCard({ project, index, inView, onOpen }) {
         }}
       />
 
-      {/* Gradient header */}
-      <div
-        className={`h-36 bg-gradient-to-br ${project.gradient} relative overflow-hidden group/header`}
-        style={{ borderBottom: '1px solid var(--border)', zIndex: 1 }}
-      >
-        <div className="absolute inset-0 flex items-center justify-center opacity-10">
-          <svg width="180" height="120" viewBox="0 0 180 120" fill="none">
-            <circle cx="90" cy="60" r="50" stroke="white" strokeWidth="1" />
-            <circle cx="90" cy="60" r="30" stroke="white" strokeWidth="1" />
-            <line x1="40" y1="60" x2="140" y2="60" stroke="white" strokeWidth="1" />
-            <line x1="90" y1="10" x2="90" y2="110" stroke="white" strokeWidth="1" />
-            <circle cx="90" cy="60" r="6" fill="white" />
-          </svg>
-        </div>
-        <div
-          className="absolute -top-4 -right-4 w-24 h-24 rounded-full blur-2xl"
-          style={{ background: project.accentColor + '30' }}
-        />
-        <span
-          className="absolute top-4 left-4 text-xs font-bold font-display tracking-widest"
-          style={{ color: project.accentColor }}
-        >
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        {/* Open modal hint */}
-        <div
-          className="absolute top-4 right-4 w-7 h-7 rounded-lg flex items-center justify-center opacity-0 group-hover/header:opacity-100 transition-opacity"
-          style={{ background: 'rgba(0,0,0,0.4)', color: 'white' }}
-        >
-          <Maximize2 size={12} />
-        </div>
-      </div>
+      {/* Parallax Image / Gradient header */}
+      <ParallaxImageHeader
+        project={project}
+        index={index}
+        isHovered={isHovered}
+        parallaxY={parallaxY}
+        imgRef={imgRef}
+      />
 
       {/* Content */}
       <div className="p-6 relative z-10">

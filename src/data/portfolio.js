@@ -110,6 +110,7 @@ export const projects = [
     tags: ["Python", "NLP", "TF-IDF", "Scikit-learn", "Streamlit"],
     github: "https://github.com/AnkitRaj027/ResumeAnalyzer", // ← Update
     demo: "https://resumesinsight.streamlit.app/", // ← Add live demo URL if available
+    previewImage: "/previews/resumeanalyzer.png", // ← Drop a screenshot in /public/previews/ to enable parallax
     featured: true,
     gradient: "from-blue-600/20 to-violet-600/20",
     accentColor: "#3b82f6",
@@ -130,6 +131,7 @@ export const projects = [
     tags: ["Python", "LangChain", "RAG", "FastAPI", "React"],
     github: "https://github.com/AnkitRaj027/PocketCA", // ← Update
     demo: "https://pocketca.streamlit.app/", // ← Add live demo URL if available
+    previewImage: "/previews/pocketca.png", // ← Drop a screenshot in /public/previews/ to enable parallax
     featured: true,
     gradient: "from-emerald-600/20 to-cyan-600/20",
     accentColor: "#10b981",
@@ -150,6 +152,7 @@ export const projects = [
     tags: ["Python", "Distributed Systems", "Networking", "Replication"],
     github: "https://github.com/AnkitRaj027/DistributedFileSystem", // ← Update
     demo: "https://filesystemdistributed.vercel.app/",
+    previewImage: "/previews/distributed-fs.png", // ← Drop a screenshot in /public/previews/ to enable parallax
     featured: true,
     gradient: "from-orange-600/20 to-red-600/20",
     accentColor: "#f97316",

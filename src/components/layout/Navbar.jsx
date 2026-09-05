@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Download, Sparkles } from 'lucide-react';
 import { personal } from '../../data/portfolio';
 import ThemeToggle from '../ui/ThemeToggle';
+import { useSound } from '../../context/SoundContext';
 
 const navLinks = [
   { href: '#about',        label: 'About' },
@@ -15,6 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const { playSound } = useSound();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -73,6 +75,7 @@ export default function Navbar() {
               <button
                 key={link.href}
                 onClick={() => handleNav(link.href)}
+                onMouseEnter={() => playSound('tick')}
                 className={`nav-link ${activeSection === link.href.replace('#', '') ? 'active text-white' : ''}`}
               >
                 {link.label}

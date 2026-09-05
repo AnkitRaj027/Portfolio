@@ -799,3 +799,41 @@ body {
   mix-blend-mode: normal;
   display: block;
 }
+
+/* ============================================================
+   PARTICLE BURST — stat card micro-orb keyframe
+   ============================================================ */
+@keyframes burst-orb {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+  60%  { opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
+}
+
+.burst-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.35), transparent 70%);
+  pointer-events: none;
+  animation: burst-orb 0.55s ease-out forwards;
+}
+
+/* ============================================================
+   PROJECT CARD IMAGE — smooth transition for parallax
+   ============================================================ */
+.project-card img {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ============================================================
+   SOUND TOGGLE — smooth appearance
+   ============================================================ */
+#sound-toggle {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}

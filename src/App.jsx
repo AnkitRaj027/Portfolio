@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { SoundProvider } from './context/SoundContext';
 
 // Layout
 import Navbar     from './components/layout/Navbar';
@@ -11,6 +12,7 @@ import ScrollProgress    from './components/ui/ScrollProgress';
 import CustomCursor      from './components/ui/CustomCursor';
 import BackToTop         from './components/ui/BackToTop';
 import OpenToWorkBanner  from './components/ui/OpenToWorkBanner';
+import SoundToggle       from './components/ui/SoundToggle';
 import TechTicker        from './components/ui/TechTicker';
 import AIAssistant       from './components/ui/AIAssistant';
 
@@ -53,6 +55,7 @@ function PortfolioApp() {
         <ScrollProgress />
         <BackToTop />
         <AIAssistant />
+        <SoundToggle />
 
         {/* Open to work banner above navbar */}
         <OpenToWorkBanner />
@@ -87,7 +90,9 @@ function PortfolioApp() {
 export default function App() {
   return (
     <ThemeProvider>
-      <PortfolioApp />
+      <SoundProvider>
+        <PortfolioApp />
+      </SoundProvider>
     </ThemeProvider>
   );
 }

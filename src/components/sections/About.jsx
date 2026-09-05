@@ -4,6 +4,7 @@ import { about, personal } from '../../data/portfolio';
 import useInView from '../../hooks/useInView';
 import useCountUp from '../../hooks/useCountUp';
 import SectionHeader from '../ui/SectionHeader';
+import useParticleBurst from '../../hooks/useParticleBurst';
 
 const iconMap = { GraduationCap, Code2, Cpu, Trophy, Brain, GitBranch };
 
@@ -16,14 +17,18 @@ const interests = [
 function StatCard({ stat, index, inView }) {
   const Icon = iconMap[stat.icon];
   const animated = useCountUp(stat.value, { enabled: inView, duration: 1600 });
+  const burst = useParticleBurst();
 
   return (
     <motion.div
-      className="glass p-5 rounded-xl"
+      className="glass p-5 rounded-xl cursor-default"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.4, delay: 0.4 + index * 0.08 }}
       style={{ border: '1px solid var(--border)' }}
+      onMouseEnter={(e) =>
+        burst(e.currentTarget, { minimal: true, particleCount: 18, spread: 45, scalar: 0.6, gravity: 1.4 })
+      }
     >
       {Icon && (
         <div
