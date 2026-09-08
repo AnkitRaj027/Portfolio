@@ -15,7 +15,7 @@ export const personal = {
   availability: "Available for opportunities",
   email: "iamankitraj027@gmail.com", // ← Replace with your actual email
   location: "India",
-  profileImage: "/photo.jpg", // ← Add your image path here e.g. "/profile.jpg"
+  profileImage: "/profile.png", // ← Add your image path here e.g. "/profile.jpg"
   formspreeId: "xzepjwej", // ← Replace after creating a Formspree account at formspree.io
   socials: {
     github: "https://github.com/AnkitRaj027",   // ← Replace with your GitHub URL
