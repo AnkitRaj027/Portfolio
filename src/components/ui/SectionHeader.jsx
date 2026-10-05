@@ -16,7 +16,7 @@ export default function SectionHeader({ number, label, title, subtitle, center =
         {title}
       </h2>
       {subtitle && (
-        <p className="text-text-secondary max-w-xl" style={{ color: 'var(--text-secondary)' }}>
+        <p className={`text-text-secondary max-w-xl ${center ? 'mx-auto' : ''}`} style={{ color: 'var(--text-secondary)' }}>
           {subtitle}
         </p>
       )}

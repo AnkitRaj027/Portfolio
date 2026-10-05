@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, Brain, Sparkles, Monitor, Wrench, CheckCircle2 } from 'lucide-react';
+import { Code2, Brain, Sparkles, Monitor, Wrench, CheckCircle2, Layers } from 'lucide-react';
 import { skills } from '../../data/portfolio';
 import useInView from '../../hooks/useInView';
 import SectionHeader from '../ui/SectionHeader';
 import { useTheme } from '../../context/ThemeContext';
 
-const iconMap = { Code2, Brain, Sparkles, Monitor, Wrench };
+const iconMap = { Code2, Brain, Sparkles, Monitor, Wrench, Layers };
 
 const categoryColors = {
   blue:    { text: '#3b82f6', bg: 'rgba(59,130,246,0.06)', border: 'rgba(59,130,246,0.2)',  glow: 'rgba(59,130,246,0.18)' },
   violet:  { text: '#8b5cf6', bg: 'rgba(139,92,246,0.06)', border: 'rgba(139,92,246,0.2)', glow: 'rgba(139,92,246,0.18)' },
+  rose:    { text: '#f43f5e', bg: 'rgba(244,63,94,0.06)',   border: 'rgba(244,63,94,0.2)',   glow: 'rgba(244,63,94,0.18)' },
   cyan:    { text: '#06b6d4', bg: 'rgba(6,182,212,0.06)',   border: 'rgba(6,182,212,0.2)',   glow: 'rgba(6,182,212,0.18)' },
   emerald: { text: '#10b981', bg: 'rgba(16,185,129,0.06)', border: 'rgba(16,185,129,0.2)', glow: 'rgba(16,185,129,0.18)' },
   orange:  { text: '#f97316', bg: 'rgba(249,115,22,0.06)', border: 'rgba(249,115,22,0.2)',  glow: 'rgba(249,115,22,0.18)' },

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, Maximize2, ImageOff } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Maximize2, ChevronDown } from 'lucide-react';
 import { GithubIcon } from '../ui/BrandIcons';
 import { projects } from '../../data/portfolio';
 import useInView from '../../hooks/useInView';
@@ -8,18 +8,16 @@ import SectionHeader from '../ui/SectionHeader';
 import ProjectModal from '../ui/ProjectModal';
 
 /* ── Parallax Image Header ─────────────────────────────── */
-function ParallaxImageHeader({ project, index, isHovered, glow }) {
-  const imgRef = useRef(null);
-  const [parallaxY, setParallaxY] = useState(0);
+function ParallaxImageHeader({ project, index, isHovered, parallaxY = 0 }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
 
-  // Reset on hover state change
   useEffect(() => {
-    if (!isHovered) setParallaxY(0);
-  }, [isHovered]);
+    setLoaded(false);
+    setErrored(false);
+  }, [project.previewImage]);
 
-  const hasImage = project.previewImage && !errored;
+  const hasImage = Boolean(project.previewImage) && !errored;
 
   return (
     <div
@@ -29,7 +27,6 @@ function ParallaxImageHeader({ project, index, isHovered, glow }) {
       {/* Image layer */}
       {project.previewImage && (
         <img
-          ref={imgRef}
           src={project.previewImage}
           alt={`${project.title} preview`}
           onLoad={() => setLoaded(true)}
@@ -172,7 +169,9 @@ function ProjectCard({ project, index, inView, onOpen }) {
 
       {/* Content */}
       <div className="p-6 relative z-10">
-        <h3 className="font-display text-xl font-bold text-white mb-2">{project.title}</h3>
+        <h3 className="font-display text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+          {project.title}
+        </h3>
         <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
           {project.shortDesc || project.description}
         </p>
@@ -251,15 +250,17 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedProjects.map((project, i) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={i}
-              inView={inView}
-              onOpen={setSelectedProject}
-            />
-          ))}
+          <AnimatePresence>
+            {displayedProjects.map((project, i) => (
+              <ProjectCard
+                key={project.id || i}
+                project={project}
+                index={i}
+                inView={inView}
+                onOpen={setSelectedProject}
+              />
+            ))}
+          </AnimatePresence>
         </div>
 
         {projects.length > 3 && (
@@ -269,7 +270,7 @@ export default function Projects() {
               className="px-6 py-3 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition-all duration-300 flex items-center gap-2 hover:bg-slate-900/40"
             >
               {showAll ? 'Show Less' : 'Show More Projects'}
-              <ArrowRight size={16} className={`transition-transform duration-300 ${showAll ? '-rotate-90' : 'rotate-90'}`} />
+              <ChevronDown size={16} className={`transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
             </button>
           </div>
         )}

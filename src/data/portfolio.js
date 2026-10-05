@@ -24,7 +24,7 @@ export const personal = {
   },
   githubUsername: "AnkitRaj027", // ← Your GitHub username for stats section
   openToWork: true, // ← Set to false to hide the Open to Work banner
-  resume: "/ankitRajCV.pdf", // ← Set to "/resume.pdf" after dropping your PDF in /public
+  resume: "/specializedCV.pdf", // ← Set to "/resume.pdf" after dropping your PDF in /public
 };
 
 export const about = {
@@ -49,6 +49,7 @@ export const skills = [
       { name: "C++", description: "Used for competitive programming and performance-critical tasks." },
       { name: "Java", description: "OOP fundamentals and academic projects." },
       { name: "JavaScript", description: "Frontend and full-stack web development." },
+      { name: "SQL", description: "Database querying, data management, and relational database development." },
     ],
   },
   {
@@ -58,9 +59,27 @@ export const skills = [
     items: [
       { name: "Machine Learning", description: "Supervised, unsupervised, and semi-supervised learning paradigms." },
       { name: "NLP", description: "Text processing, tokenization, embeddings, and language models." },
-      { name: "Scikit-learn", description: "Classical ML algorithms and pipelines." },
       { name: "TF-IDF", description: "Text feature extraction for information retrieval." },
       { name: "Cosine Similarity", description: "Document and vector similarity measurement." },
+      { name: "Supervised Learning", description: "Learning predictive patterns from labeled data for classification and regression." },
+      { name: "Unsupervised Learning", description: "Discovering hidden patterns, structures, and relationships in unlabeled data." },
+      { name: "Neural Networks", description: "Building and training neural models to learn complex patterns from data." },
+      { name: "Prompt Engineering", description: "Designing effective prompts to guide and optimize large language model outputs." },
+
+    ],
+  },
+  {
+    category: "Libraries and Frameworks",
+    icon: "Layers",
+    color: "white",
+    items: [
+      { name: "Scikit-learn", description: "Classical ML algorithms and pipelines." },
+      { name: "PyTorch", description: "Deep learning framework for building and training neural networks." },
+      { name: "NumPy", description: "Numerical computing and efficient array-based data processing." },
+      { name: "Pandas", description: "Data manipulation, analysis, and preprocessing with structured datasets." },
+      { name: "Matplotlib", description: "Data visualization and analytical plotting for machine learning workflows." },
+      { name: "Seaborn", description: "Statistical data visualization for exploring and understanding datasets." },
+      { name: "Gradio", description: "Building interactive web interfaces for machine learning models and applications." },
     ],
   },
   {
@@ -96,11 +115,76 @@ export const skills = [
       { name: "GitHub", description: "Code hosting, project management, and CI/CD." },
       { name: "Linux", description: "Command-line proficiency and server environments." },
       { name: "VS Code", description: "Primary development environment with extensive tooling." },
+      { name: "Google Colab", description: "Cloud-based environment for interactive Python development and machine learning." },
+      { name: "Jupyter Notebook", description: "Interactive environment for experimentation, data analysis, and machine learning." },
     ],
   },
 ];
 
 export const projects = [
+  {
+    id: "codelens",
+    title: "CodeLens",
+    shortDesc: "AST-powered code analysis and algorithm complexity visualization platform.",
+    description:
+      "A web-based code analysis platform that parses Python and C++ programs using Abstract Syntax Trees to analyze their structure and estimate algorithmic time complexity. CodeLens transforms source code into an interactive analysis experience, helping developers understand how their algorithms scale.",
+    tags: ["Python", "C++", "AST", "Algorithms", "Big-O", "React"],
+    github: "https://github.com/AnkitRaj027/CodeLens",
+    demo: "https://codelens-study.vercel.app/analyzer",
+    previewImage: "/previews/codelens.png",
+    featured: true,
+    gradient: "from-cyan-600/20 to-blue-600/20",
+    accentColor: "#06b6d4",
+    details: [
+      "Parses Python and C++ source code using Abstract Syntax Trees",
+      "Analyzes loops, nested structures, recursion, and control flow patterns",
+      "Estimates time complexity using deterministic algorithmic analysis",
+      "Provides Big-O complexity insights to help understand algorithm scalability",
+      "Interactive web interface for analyzing code and exploring complexity results",
+    ],
+  },
+  {
+    id: "rewriting-myself",
+    title: "ReWriting Myself",
+    shortDesc: "A personal digital space for documenting growth, experiences, and self-reflection.",
+    description:
+      "A personal web platform built to document my journey, thoughts, experiences, goals, and personal growth. ReWriting Myself transforms everyday moments and reflections into a living digital record of how I learn, evolve, and become a better version of myself.",
+    tags: ["React", "TypeScript", "Supabase", "Authentication", "Vercel"],
+    github: "https://github.com/AnkitRaj027/ReWriting",
+    demo: "https://rewritingmyself.vercel.app/",
+    previewImage: "/previews/rewritingmyself.png",
+    featured: true,
+    gradient: "from-violet-600/20 to-blue-600/20",
+    accentColor: "#8b5cf6",
+    details: [
+      "Personal platform for documenting thoughts, experiences, goals, and milestones",
+      "Designed around self-reflection and tracking personal growth over time",
+      "Structured digital journal that turns everyday experiences into a lasting record",
+      "Interactive and immersive interface focused on personal storytelling",
+      "Authentication and persistent data storage for maintaining a private personal space",
+    ],
+  },
+  {
+    id: "living-journal",
+    title: "Living Journal",
+    shortDesc: "A digital journal for capturing thoughts, memories, and everyday moments.",
+    description:
+      "A personal digital journaling platform designed to make documenting everyday life simple, immersive, and meaningful. Living Journal provides a space to capture thoughts, experiences, memories, and reflections while building a personal archive that grows alongside you.",
+    tags: ["React", "TypeScript", "Supabase", "Google OAuth", "Vercel"],
+    github: "https://github.com/AnkitRaj027/Living-Journal",
+    demo: "https://living-journal.vercel.app/",
+    previewImage: "/previews/livingjournal.png",
+    featured: true,
+    gradient: "from-emerald-600/20 to-cyan-600/20",
+    accentColor: "#10b981",
+    details: [
+      "Digital journaling space for recording thoughts, memories, and daily experiences",
+      "Google authentication for a personalized and secure journaling experience",
+      "Persistent cloud storage for accessing journal entries across sessions",
+      "Clean and immersive interface designed around distraction-free writing",
+      "Personal archive that allows experiences and reflections to accumulate over time",
+    ],
+  },
   {
     id: "smart-resume-ranker",
     title: "ResumeAnalyzer",
@@ -152,7 +236,7 @@ export const projects = [
     tags: ["Python", "Distributed Systems", "Networking", "Replication"],
     github: "https://github.com/AnkitRaj027/DistributedFileSystem", // ← Update
     demo: "https://filesystemdistributed.vercel.app/",
-    previewImage: "/previews/distributed-fs.png", // ← Drop a screenshot in /public/previews/ to enable parallax
+    previewImage: "/previews/file.png", // ← Drop a screenshot in /public/previews/ to enable parallax
     featured: true,
     gradient: "from-orange-600/20 to-red-600/20",
     accentColor: "#f97316",
@@ -170,23 +254,29 @@ export const experience = [
   // Replace with your actual experiences. Examples below are placeholders:
   {
     id: "exp-1",
-    type: "hackathon", // hackathon | competition | certification | workshop | achievement
-    title: "Hackathon Participant", // ← Replace with actual event name
-    organization: "OnDemand", // ← Replace
-    date: "2024", // ← Replace
-    description: "Participated in a 24-hour hackathon building an AI-powered solution.", // ← Replace
-    icon: "Trophy",
-    tags: ["AI", "Python"],
+    type: "Hackathon",
+    title: "PROMPT-A-THON",
+    organization: "Atlanta , Griffin",
+    date: "September 2026",
+    description:
+      "Participated in PROMPT-A-THON, a hackathon focused on exploring AI and prompt engineering through practical problem-solving, rapid prototyping, and collaborative development.",
+    icon: "Code2",
+    tags: ["Hackathon", "AI", "Prompt Engineering", "Problem Solving"],
+    certificateImage: "/certificates/promptathon.jpeg",
+    certificateUrl: "https://verification.givemycertificate.com/v/108ccad8-cb04-42fd-a648-854ba001c7bc",
   },
   {
     id: "exp-2",
-    type: "workshop",
-    title: "CPP Programming", // ← Replace
-    organization: "Let's upgrade", // ← Replace
-    date: "2025", // ← Replace
-    description: "Attended a hands-on workshop on advanced ML concepts and practical applications.", // ← Replace
-    icon: "BookOpen",
-    tags: ["CPP"],
+    type: "Training",
+    title: "Generative AI Essentials",
+    organization: "CIPHERSCHOOLS",
+    date: "June 2026 - July 2026",
+    description:
+      "Completed Generative AI Essentials training, gaining hands-on understanding of generative AI concepts, large language models, prompt engineering, and practical AI application development.",
+    icon: "BrainCircuit",
+    tags: ["Generative AI", "LLMs", "Prompt Engineering", "AI"],
+    certificateImage: "/certificates/genai.png",
+    certificateUrl: "https://cipherschools.com/certificate/preview?id=6a756efa8fd0080a9fbf8ac3",
   },
   {
     id: "exp-3",
@@ -198,6 +288,32 @@ export const experience = [
       "Conducted cybersecurity awareness sessions for children, adults, and senior citizens, helping participants understand online safety, cyber threats, phishing, scams, password security, and responsible digital practices.",
     icon: "ShieldCheck",
     tags: ["Cybersecurity", "Digital Safety", "Awareness", "Community Outreach"],
+    certificateImage: "/certificates/wns.png",
+    certificateUrl: "",
+  },
+  {
+    id: "exp-4",
+    type: "hackathon",
+    title: "Hackathon Participant",
+    organization: "OnDemand",
+    date: "2024",
+    description: "Participated in a 24-hour hackathon building an AI-powered solution.",
+    icon: "Trophy",
+    tags: ["AI", "Python"],
+    certificateImage: "/certificates/webathon.png",
+    certificateUrl: "https://verification.givemycertificate.com/v/d78db6c7-45cb-43e7-91ed-08800fc478f5",
+  },
+  {
+    id: "exp-5",
+    type: "workshop",
+    title: "CPP Programming",
+    organization: "Let's upgrade",
+    date: "2024",
+    description: "Attended a hands-on workshop on advanced ML concepts and practical applications.",
+    icon: "BookOpen",
+    tags: ["CPP"],
+    certificateImage: "/certificates/cpp.png",
+    certificateUrl: "",
   },
 ];
 
@@ -206,7 +322,7 @@ export const education = [
     degree: "B.Tech in Artificial Intelligence & Machine Learning",
     institution: "Lovely Professional University",
     location: "Punjab, India",
-    duration: "2022 – 2026", // ← Update if needed
+    duration: "2024 – 2028", // ← Update if needed
     cgpa: "8.85", // ← Add your CGPA e.g. "8.5 / 10"
     coursework: [
       "Machine Learning",
@@ -220,7 +336,7 @@ export const education = [
     ],
     achievements: [
       "Relevant coursework in AI/ML fundamentals and advanced techniques",
-      // ← Add academic achievements here
+      "Proud Reliance Foundation Scholar"
     ],
   },
 ];
@@ -228,6 +344,15 @@ export const education = [
 export const certifications = [
   {
     id: "cert-1",
+    name: "Pytorch", // ← Replace
+    issuer: "DeepLearning.AI", // ← Replace e.g. Coursera, Google, etc.
+    date: "2026", // ← Replace
+    credentialUrl: "https://www.coursera.org/account/accomplishments/verify/2ZF8E9VH4IL0", // ← Replace with actual credential URL
+    image: "/pytorch.png", // ← Add certificate image path
+    tags: ["Tensor", "Neural Network", "Computer Vision"],
+  },
+  {
+    id: "cert-2",
     name: "Google AI Professional Certificate", // ← Replace
     issuer: "Google", // ← Replace e.g. Coursera, Google, etc.
     date: "2026", // ← Replace
@@ -236,7 +361,7 @@ export const certifications = [
     tags: ["AI", "ML", "GEMINI"],
   },
   {
-    id: "cert-2",
+    id: "cert-3",
     name: "Programming in Python", // ← Replace
     issuer: "Google", // ← Replace
     date: "2026", // ← Replace
@@ -245,7 +370,7 @@ export const certifications = [
     tags: ["Python"],
   },
   {
-    id: "cert-3",
+    id: "cert-4",
     name: "Prompt Engineering", // ← Replace
     issuer: "Vanderbilt University", // ← Replace
     date: "2026", // ← Replace
@@ -254,7 +379,7 @@ export const certifications = [
     tags: ["AI", "Prompt Engineering"],
   },
   {
-    id: "cert-4",
+    id: "cert-5",
     name: "Building RAG Applications", // ← Replace
     issuer: "IBM", // ← Replace
     date: "2026", // ← Replace
@@ -263,7 +388,7 @@ export const certifications = [
     tags: ["AI", "RAG"],
   },
   {
-    id: "cert-5",
+    id: "cert-6",
     name: "Generative AI Application", // ← Replace
     issuer: "IBM", // ← Replace
     date: "2026", // ← Replace
@@ -272,7 +397,7 @@ export const certifications = [
     tags: ["AI", "Generative AI", "GenAI", "RAG", "LLM"],
   },
   {
-    id: "cert-6",
+    id: "cert-7",
     name: "Java", // ← Replace
     issuer: "iamneo", // ← Replace
     date: "2026", // ← Replace
@@ -299,31 +424,16 @@ export const currentlyLearning = [
 export const blog = [
   {
     id: "blog-1",
-    title: "Understanding RAG: Retrieval-Augmented Generation Explained", // ← Replace
-    summary: "A deep dive into how RAG pipelines work, when to use them, and how to build one with LangChain.", // ← Replace
-    tag: "Generative AI",
-    date: "2024", // ← Replace
-    readTime: "5 min read",
-    url: "#", // ← Replace with your actual article URL
+    title: "Building Mini-GPT from Scratch with PyTorch",
+    summary:
+      "A practical deep dive into building a miniature GPT-style language model from scratch, covering tokenization, embeddings, self-attention, positional encoding, transformer blocks, and text generation using PyTorch.",
+    tag: "Deep Learning",
+    date: "2026",
+    readTime: "10 min read",
+    url: "https://medium.com/@ankitraj765489/i-built-a-mini-gpt-from-scratch-in-pytorch-heres-everything-i-learned-ea42494decb0", // Replace with your actual article URL
   },
-  {
-    id: "blog-2",
-    title: "Building a Resume Ranker with NLP and TF-IDF", // ← Replace
-    summary: "How I built Smart Resume Ranker — from text preprocessing to cosine similarity scoring.", // ← Replace
-    tag: "Machine Learning",
-    date: "2024", // ← Replace
-    readTime: "7 min read",
-    url: "#", // ← Replace
-  },
-  {
-    id: "blog-3",
-    title: "Getting Started with LangGraph for Agentic Workflows", // ← Replace
-    summary: "How to orchestrate complex multi-step AI agents using LangGraph's graph-based architecture.", // ← Replace
-    tag: "Agentic AI",
-    date: "2024", // ← Replace
-    readTime: "6 min read",
-    url: "#", // ← Replace
-  },
+
+
   // ← Add more blog posts
 ];
 
